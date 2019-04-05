@@ -12,39 +12,43 @@ public class CountingSort extends AbstractSorting<Integer> {
 
 	@Override
 	public void sort(Integer[] array, int leftIndex, int rightIndex) {
-		countingSort(array, leftIndex, rightIndex);
+		if (array.length > 1) 
+			countingSort(array, leftIndex, rightIndex);
 		
 	}
 	
 	private void countingSort(Integer[] array, int leftIndex, int rightIndex) {
-		
-		// Sets váriaveis auxiliares
-		Integer[] novoArray = new Integer[array.length];
-		int maiorNum =0;
-		
-		// Achando o maior número presente no array
-		for (int i = 0; i < array.length; i++) {
-			if (array[i].compareTo(maiorNum) == 1)
-				maiorNum = array[i];
+		int maior = array[getIndiceDoMaiorElemento(array, leftIndex, rightIndex)];
+		Integer[] contador = new Integer[maior + 1];
+		Integer[] arrayOrdenado = new Integer[array.length];
+		for (int i = 0; i < contador.length; i++) {
+			contador[i] = 0;
 		}
-		
-		// Set contador no lenght do máximo inteiro presente no array
-		Integer[] contador = new Integer[maiorNum];
-		
-		for (int i = 0; i < array.length; i++) {
-			contador[array[i]] += 1;
+		for (int i = leftIndex; i <= rightIndex; i++) {
+			contador[array[i]]++;
 		}
-		
-		// Soma acumulativa
-		for (int j = 1; j <= contador.length; j++) {
-			contador[j] = contador[j] + contador[j -1];
+		for(int i = 1; i < contador.length; i++){
+			contador[i] += contador[i - 1];
 		}
-		
-		// Setar no novo array
-		for (int k = 0; k < contador.length; k++) {
-			
+		for (int i = leftIndex; i <= rightIndex; i++) {
+			arrayOrdenado[--contador[array[i]]] = array[i];
 		}
+		for (int i = leftIndex; i <= rightIndex; i++) {
+			array[i] = arrayOrdenado[i - leftIndex];
+		}		
 		
 	}
+
+	private int getIndiceDoMaiorElemento(Integer[] array, int leftIndex, int rightIndex) {
+		int maiorIndex = leftIndex;
+		for (int i = leftIndex; i <= rightIndex; i++) {
+			if (array[maiorIndex] < array[i]) {
+				maiorIndex = i;
+			}
+		}
+		return maiorIndex;
+	}
+
+	
 
 }
