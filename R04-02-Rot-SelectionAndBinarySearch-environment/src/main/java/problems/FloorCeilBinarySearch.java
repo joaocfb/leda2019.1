@@ -15,14 +15,30 @@ public class FloorCeilBinarySearch implements FloorCeil {
 
 	@Override
 	public Integer floor(Integer[] array, Integer x) {
-		// TODO implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		int prox = 0;
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] == x) {
+				return array[i];
+			} else if (array[i] < x && array[i] > prox) {
+				prox = array[i];
+			}
+		}
+		return prox;
 	}
 
 	@Override
 	public Integer ceil(Integer[] array, Integer x) {
-		// TODO implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		int prox = 0;
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] == x) {
+				return array[i];
+			} else if (array[i] > x) {
+				if (array[i - 1] < x) {
+					prox = array[i];
+				}
+			}
+		}
+		return prox;
 	}
 
 }

@@ -21,8 +21,7 @@ public class OrderStatisticsSelectionImpl<T extends Comparable<T>> implements Or
 	 */
 	@Override
 	public T getOrderStatistics(T[] array, int k) {
-		//TODO implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		//return getOrderStatistics(T[] array, int 0, int array.length - 1, k);
+		return null;
 	}
-
 }
