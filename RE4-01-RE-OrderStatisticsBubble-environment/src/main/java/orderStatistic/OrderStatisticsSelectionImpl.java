@@ -19,9 +19,37 @@ public class OrderStatisticsSelectionImpl<T extends Comparable<T>> implements Or
 	 * - Sugestao: o uso de recursao ajudara sua codificacao.
 	 */
 	@Override
-	public T getOrderStatistics(T[] array, int k) {
-		//TODO implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+	public T getEstatisticaOrdem(T[] array, int k) {
+		return estatisticaOrdem(array, k - 1);
+	}
+
+	private T estatisticaOrdem(T[] array, int k) {
+		T estatistica = null;
+		if (k == 0) {
+			int menor = 0;
+			for (int i = 1; i < array.length; i++) {
+				if (array[i].compareTo(array[menor]) < 0) {
+					menor = i;
+				}
+			}
+			estatistica = array[menor];
+		} else {
+			T menorAnterior = estatisticaOrdem(array, k - 1);
+			int menor;
+			if (array[0].equals(menorAnterior)) {
+				menor = 1;
+			} else {
+				menor = 0;
+			}
+			for (int i = 0; i < array.length; i++) {
+				if (array[i].compareTo(array[menor]) < 0 && menorAnterior.compareTo(array[i]) < 0) {
+					menor = i;
+				}
+			}
+			estatistica = array[menor];
+		}
+		return estatistica;
+
 	}
 
 }

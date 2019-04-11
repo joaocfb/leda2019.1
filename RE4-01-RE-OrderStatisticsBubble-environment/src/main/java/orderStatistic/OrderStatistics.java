@@ -17,5 +17,5 @@ public interface OrderStatistics<T extends Comparable<T>> {
 	 * @param k
 	 * @return
 	 */
-	public T getOrderStatistics(T[] array, int k);
+	public T getEstatisticaOrdem(T[] array, int k);
 }
