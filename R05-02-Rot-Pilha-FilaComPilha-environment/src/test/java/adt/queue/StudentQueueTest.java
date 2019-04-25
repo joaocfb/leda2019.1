@@ -8,6 +8,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import adt.stack.StackOverflowException;
+import adt.stack.StackUnderflowException;
+
 public class StudentQueueTest {
 
 	public Queue<Integer> queue1;
@@ -15,7 +18,7 @@ public class StudentQueueTest {
 	public Queue<Integer> queue3;
 
 	@Before
-	public void setUp() throws QueueOverflowException {
+	public void setUp() throws QueueOverflowException, StackUnderflowException, StackOverflowException {
 
 		getImplementations();
 
@@ -32,9 +35,9 @@ public class StudentQueueTest {
 
 	private void getImplementations() {
 		// TODO O aluno deve ajustar aqui para instanciar sua implementação
-		queue1 = null;
-		queue2 = null;
-		queue3 = null;
+		queue1 = new QueueUsingStack<Integer>(4);
+		queue2 = new QueueUsingStack<Integer>(2);
+		queue3 = new QueueUsingStack<Integer>(0);
 	}
 
 	// MÉTODOS DE TESTE
@@ -55,7 +58,7 @@ public class StudentQueueTest {
 	}
 
 	@Test
-	public void testEnqueue() {
+	public void testEnqueue() throws StackUnderflowException, StackOverflowException {
 		try {
 			queue1.enqueue(new Integer(5));
 		} catch (QueueOverflowException e) {
@@ -65,13 +68,13 @@ public class StudentQueueTest {
 	}
 
 	@Test(expected = QueueOverflowException.class)
-	public void testEnqueueComErro() throws QueueOverflowException {
+	public void testEnqueueComErro() throws QueueOverflowException, StackUnderflowException, StackOverflowException {
 		queue1.enqueue(new Integer(5)); // vai depender do tamanho que a fila
 										// foi iniciada!!!
 	}
 
 	@Test
-	public void testDequeue() {
+	public void testDequeue() throws StackUnderflowException {
 		try {
 			assertEquals(new Integer(1), queue1.dequeue());
 		} catch (QueueUnderflowException e) {
@@ -81,7 +84,7 @@ public class StudentQueueTest {
 	}
 
 	@Test(expected = QueueUnderflowException.class)
-	public void testDequeueComErro() throws QueueUnderflowException {
+	public void testDequeueComErro() throws QueueUnderflowException, StackUnderflowException {
 		assertEquals(new Integer(1), queue1.dequeue()); // vai depender do
 														// tamanho que a fial
 														// foi iniciada!!!

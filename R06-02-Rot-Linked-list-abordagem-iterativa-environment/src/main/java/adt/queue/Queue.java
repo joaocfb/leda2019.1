@@ -1,8 +1,5 @@
 package adt.queue;
 
-import adt.stack.StackOverflowException;
-import adt.stack.StackUnderflowException;
-
 /**
  * The interface of a generic queue. The queue is able to store any kind of
  * data.
@@ -17,7 +14,7 @@ public interface Queue<T> {
 	 * @param element
 	 * @throws QueueOverflowException
 	 */
-	public void enqueue(T element) throws QueueOverflowException, StackUnderflowException, StackOverflowException;
+	public void enqueue(T element) throws QueueOverflowException;
 
 	/**
 	 * If the queue has elements, it removes the oldest of the queue and returns
@@ -26,7 +23,7 @@ public interface Queue<T> {
 	 * @return
 	 * @throws QueueUnderflowException
 	 */
-	public T dequeue() throws QueueUnderflowException, StackUnderflowException;
+	public T dequeue() throws QueueUnderflowException;
 
 	/**
 	 * Returns (without removing) the oldest element of the queue; or 
