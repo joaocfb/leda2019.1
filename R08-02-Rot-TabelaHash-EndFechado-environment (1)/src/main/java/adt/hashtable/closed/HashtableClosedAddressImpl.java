@@ -1,8 +1,12 @@
 package adt.hashtable.closed;
 
+import java.util.LinkedList;
+
 import adt.hashtable.hashfunction.HashFunction;
+import adt.hashtable.hashfunction.HashFunctionClosedAddress;
 import adt.hashtable.hashfunction.HashFunctionClosedAddressMethod;
 import adt.hashtable.hashfunction.HashFunctionFactory;
+import util.Util;
 
 public class HashtableClosedAddressImpl<T> extends AbstractHashtableClosedAddress<T> {
 
@@ -27,55 +31,93 @@ public class HashtableClosedAddressImpl<T> extends AbstractHashtableClosedAddres
     * @param method
     */
 
-   @SuppressWarnings({ "rawtypes", "unchecked" })
-   public HashtableClosedAddressImpl(int desiredSize, HashFunctionClosedAddressMethod method) {
-      int realSize = desiredSize;
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public HashtableClosedAddressImpl(int desiredSize, HashFunctionClosedAddressMethod method) {
+		int realSize = desiredSize;
 
-      if (method == HashFunctionClosedAddressMethod.DIVISION) {
-         realSize = this.getPrimeAbove(desiredSize); // real size must the
-         // the immediate prime
-         // above
-      }
-      initiateInternalTable(realSize);
-      HashFunction function = HashFunctionFactory.createHashFunction(method, realSize);
-      this.hashFunction = function;
-   }
+		if (method == HashFunctionClosedAddressMethod.DIVISION) {
+			realSize = this.getPrimeAbove(desiredSize); // real size must the
+			// the immediate prime
+			// above
+		}
+		initiateInternalTable(realSize);
+		HashFunction function = HashFunctionFactory.createHashFunction(method, realSize);
+		this.hashFunction = function;
+	}
 
-   // AUXILIARY
-   /**
-    * It returns the prime number that is closest (and greater) to the given
-    * number.
-    * If the given number is prime, it is returned. 
-    * You can use the method Util.isPrime to check if a number is
-    * prime.
-    */
-   int getPrimeAbove(int number) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Not implemented yet!");
-   }
+	// AUXILIARY
+	/**
+	 * It returns the prime number that is closest (and greater) to the given
+	 * number. You can use the method Util.isPrime to check if a number is
+	 * prime.
+	 */
+	int getPrimeAbove(int number) {
+		int nextPrime = number;
+		while (!(Util.isPrime(nextPrime))) {
+			nextPrime++;
+		}
+		return nextPrime;
+	}
 
-   @Override
-   public void insert(T element) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Not implemented yet!");
-   }
+	@SuppressWarnings("unchecked")
+	@Override
+	public void insert(T element) {
+		if (element != null) {
+			int index = ((HashFunctionClosedAddress<T>) this.getHashFunction()).hash(element);
+			if (this.table[index] == null) {
+				this.table[index] = new LinkedList<T>();
+				((LinkedList<T>) this.table[index]).addFirst(element);
+				this.elements++;
+			} else {
+				if (!((LinkedList<T>) this.table[index]).contains(element)) {
+					this.COLLISIONS++;
+					((LinkedList<T>) this.table[index]).addFirst(element);
+					this.elements++;
+				}
 
-   @Override
-   public void remove(T element) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Not implemented yet!");
-   }
+			}
 
-   @Override
-   public T search(T element) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Not implemented yet!");
-   }
+		}
 
-   @Override
-   public int indexOf(T element) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Not implemented yet!");
-   }
+	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public void remove(T element) {
+		if (element != null) {
+			int index = ((HashFunctionClosedAddress<T>) this.getHashFunction()).hash(element);
+			if (this.table[index] != null) {
+				((LinkedList<T>) this.table[index]).remove(element);
+				this.elements--;
+			}
+
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public T search(T element) {
+		T result = null;
+		if (element != null) {
+			int index = ((HashFunctionClosedAddress<T>) this.getHashFunction()).hash(element);
+			if (this.table[index] != null) {
+				if (((LinkedList<T>) this.table[index]).contains(element)) {
+					result = element;
+				}
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public int indexOf(T element) {
+		int index = -1;
+		if (element != null) {
+			if (search(element) != null) {
+				index = ((HashFunctionClosedAddress<T>) this.getHashFunction()).hash(element);
+			}
+		}
+		return index;
+	}
 }
