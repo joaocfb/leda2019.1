@@ -1,8 +1,11 @@
 package adt.bst.extended;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import adt.bst.BSTImpl;
+import adt.bst.BSTNode;
 
 /**
  * Implementacao de SortComparatorBST, uma BST que usa um comparator interno em suas funcionalidades
@@ -23,15 +26,48 @@ public class SortComparatorBSTImpl<T extends Comparable<T>> extends BSTImpl<T> i
 	}
 
 	@Override
-	public T[] sort(T[] array) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+	public void insert(T element) {
+		this.insert(this.root, element, new BSTNode<T>());
+	}
+
+	private void insert(BSTNode<T> node, T element, BSTNode<T> parent) {
+		if (node.isEmpty()) {
+			node.setData(element);
+			node.setLeft(new BSTNode<T>());
+			node.setRight(new BSTNode<T>());
+			node.setParent(parent);
+		} else if (comparator.compare(element, node.getData()) < 0) {
+			insert((BSTNode<T>) node.getLeft(), element, node);
+		} else if (comparator.compare(element, node.getData()) > 0) {
+			insert((BSTNode<T>) node.getRight(), element, node);
+		}
 	}
 
 	@Override
+	public T[] sort(T[] array) {
+		while (!this.isEmpty()) {
+			this.remove(this.root.getData());
+		}
+		for (int i = 0; i < array.length; i++) {
+			this.insert(array[i]);
+		}
+		return this.order();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
 	public T[] reverseOrder() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		List<T> list = new ArrayList<>(this.size());
+		reverseOrder(list,this.root);
+		return (T[]) list.toArray();
+	}
+
+	private void reverseOrder(List<T> list, BSTNode<T> node) {
+		if (!node.isEmpty()) {
+			reverseOrder(list, (BSTNode<T>) node.getRight());
+			list.add(node.getData());
+			reverseOrder(list, (BSTNode<T>) node.getLeft());
+		}
 	}
 
 	public Comparator<T> getComparator() {

@@ -44,8 +44,7 @@ public class BSTNode<T extends Comparable<T>> extends BTNode<T> {
 		      return this;
 		}
 	    
-	     @SuppressWarnings({ "rawtypes", "unchecked" })
-		public BSTNode build(){
+	     public BSTNode build(){
 	      return new BSTNode(this);
 	    }
 	 }

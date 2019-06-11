@@ -23,12 +23,6 @@ public class Util {
 		array[i] = array[j];
 		array[j] = temp;
 	}
-	
-	public static <T> T[] makeArrayOfComparable(int size) {
-	      @SuppressWarnings("unchecked")
-	      T[] array = (T[]) new Comparable[size];
-	      return array;
-	   }
 
 	/**
 	 * It says if a specific number is prime or not.

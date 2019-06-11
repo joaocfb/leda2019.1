@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2019-05-27T16:23:40.909-0300</date>
+  <logger>JOAO CARLOS FERNANDES BERNARDO</logger>
+  <level>FINE</level>
+  <message>File 117211398-JOAO CARLOS FERNANDES BERNARDO.zip was received. It was sent by JOAO CARLOS FERNANDES BERNARDO from IP 192.168.1.101 at 27-05-2019 16*23*40</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2019-05-27T21:29:37.601-0300</date>
+  <logger>JOAO CARLOS FERNANDES BERNARDO</logger>
+  <level>FINE</level>
+  <message>File 117211398-JOAO CARLOS FERNANDES BERNARDO.zip was received. It was sent by JOAO CARLOS FERNANDES BERNARDO from IP 192.168.1.101 at 27-05-2019 21*29*37</message>
+</record>
