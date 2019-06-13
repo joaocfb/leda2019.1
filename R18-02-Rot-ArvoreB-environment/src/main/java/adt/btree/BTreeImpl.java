@@ -22,12 +22,18 @@ public class BTreeImpl<T extends Comparable<T>> implements BTree<T> {
 
 	@Override
 	public int height() {
-		return height(this.root);
+		return height(this.root, 0);
 	}
 
-	private int height(BNode<T> node) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not Implemented yet!");
+	@SuppressWarnings("unchecked")
+	private int height(BNode<T> node, int index) {
+		if (node.isLeaf()) {
+			return index + 1;
+		}
+		if (!node.isEmpty() && index < node.order) {
+			return 1 + height((BNode<T>)node.getElementAt(index), index +1);
+		}
+		return 0;
 	}
 
 	@Override
